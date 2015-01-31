@@ -4,3 +4,4 @@
 /*.class
 /vendor/*
 Gemfile.lock
+*.class
