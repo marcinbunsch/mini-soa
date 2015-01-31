@@ -1,0 +1,6 @@
+/gen-rb
+/gen-java
+/gen-py
+/*.class
+/vendor/*
+Gemfile.lock
