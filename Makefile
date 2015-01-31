@@ -2,6 +2,7 @@ gen:
 	thrift --gen rb:namespaced --gen py --gen java config/service.thrift
 	thrift --gen rb:namespaced --gen py --gen java config/auth.thrift
 	thrift --gen rb:namespaced --gen py --gen java config/notes.thrift
+	thrift --gen rb:namespaced --gen py --gen java config/billing.thrift
 
 haproxy:
 	haproxy -f config/haproxy.cfg

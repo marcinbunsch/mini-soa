@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+$:.push('./gen-rb')
+
+require "rubygems"
+require "bundler/setup"
+require 'thrift'
+
+require 'auth/auth_constants'
+require 'auth/server'
+require 'notes/notes_constants'
+require 'notes/server'
+require 'billing/billing_constants'
+require 'billing/server'
+require './common/connection'
+
+@auth = Connection.open(9000, Auth::Server::Client)
+@notes = Connection.open(9001, Notes::Server::Client)
+@billing = Connection.open(9002, Billing::Server::Client)
+
+require 'irb'
+IRB.start
+

@@ -6,6 +6,6 @@ service Server {
 
   bool isPremiumUser(1:i32 user_id),
   bool makePremiumUser(1:i32 user_id)
-  bool makeResularUser(1:i32 user_id)
+  bool makeRegularUser(1:i32 user_id)
 
 }
