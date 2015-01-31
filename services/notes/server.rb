@@ -6,9 +6,10 @@ require "bundler/setup"
 require 'thrift'
 
 require 'auth/auth_constants'
-require 'auth/server'
+require 'notes/notes_constants'
+require 'notes/server'
 
-class Auth::ServerHandler
+class Notes::ServerHandler
 
   def initialize(options)
     @options = options
@@ -18,28 +19,30 @@ class Auth::ServerHandler
     @options[:port]
   end
 
-  def getUserById(id)
-    Auth::User.new(:id => id)
+  def addNote(user, text)
+    Notes::Note.new({
+      id: rand(10000),
+      user_id: user.id,
+      text: text
+    })
   end
 
-  def getUserByToken(token)
-    return nil unless token
-    Auth::User.new({
-      id: rand(10000),
-      token: token
-    })
+  def deleteNote(user, id)
+    true
   end
 
 end
 
-port = ENV['PORT'] || 9050
-handler = Auth::ServerHandler.new(:port => port, :id => Process.pid)
-processor = Auth::Server::Processor.new(handler)
+port = ENV['PORT'] || 9060
+handler = Notes::ServerHandler.new(:port => port, :id => Process.pid)
+processor = Notes::Server::Processor.new(handler)
 
 transport = Thrift::ServerSocket.new(handler.port)
 transportFactory = Thrift::BufferedTransportFactory.new()
 server = Thrift::ThreadPoolServer.new(processor, transport, transportFactory)
 
-puts "Starting the Auth::Server at #{port}"
+puts "Starting the Note::Server at #{port}"
 server.serve()
+puts "Done"
+
 

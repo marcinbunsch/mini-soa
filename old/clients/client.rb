@@ -5,12 +5,12 @@ require "rubygems"
 require "bundler/setup"
 require 'thrift'
 
-require 'service'
-require 'service_constants'
+require 'auth/auth_constants'
+require 'auth/server'
 
 transport = Thrift::BufferedTransport.new(Thrift::Socket.new('0.0.0.0', 9089))
 protocol = Thrift::BinaryProtocol.new(transport)
-endpoint = Service::Client.new(protocol)
+endpoint = Auth::Server::Client.new(protocol)
 transport.open()
 
 trap('INT') do
@@ -20,7 +20,7 @@ end
 
 loop do
   id = rand(1000000)
-  result = endpoint.get(id)
+  result = endpoint.getUserById(id)
   p [:client, Process.pid, id, result]
   sleep 5
 end
