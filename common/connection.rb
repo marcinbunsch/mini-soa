@@ -10,6 +10,28 @@ class Connection < Struct.new(:transport, :protocol, :endpoint)
 
   def close
     transport.close
+  rescue IOError
+  end
+
+  def restart
+    close
+    transport.open
+    true
+  end
+
+  def with_reconnection(options = {})
+    retries = options[:retries] || 3
+    begin
+      yield
+    rescue => e
+      retries -= 1
+      p [retries]
+      if retries > 0
+        restart and retry
+      else
+        raise e
+      end
+    end
   end
 
 end

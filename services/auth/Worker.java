@@ -9,12 +9,13 @@ import org.apache.thrift.server.TThreadPoolServer;
 
 import org.apache.thrift.TException;
 import auth.User;
+import auth.Server.Processor;
 
-class AuthServiceHandler implements auth.Server.Iface {
+class Handler implements auth.Server.Iface {
 
   @Override
   public User getUserByToken(String token) throws TException {
-    return new User();
+    return new User(100, "mike", token, "mike@mike.com");
   }
 
   @Override
@@ -31,8 +32,8 @@ class AuthServiceHandler implements auth.Server.Iface {
 public class Worker {
 
  public static void main(String[] args) {
-   AuthServiceHandler handler = new AuthServiceHandler();
-   auth.Server.Processor<AuthServiceHandler> processor = new auth.Server.Processor<AuthServiceHandler>(handler);
+   Handler handler = new Handler();
+   Processor<Handler> processor = new Processor<Handler>(handler);
    try {
      TServerTransport serverTransport = new TServerSocket(9050);
      TServer server = new TThreadPoolServer(
