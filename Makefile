@@ -8,9 +8,10 @@ haproxy:
 	haproxy -f config/haproxy.cfg
 
 deps:
-	sudo easy_install thrift
+	brew install thrift
+	easy_install thrift
 	mkdir -p vendor
-	rm vendor/*.jar
+	rm -rf vendor/*.jar
 	cd vendor && wget http://repo.maven.apache.org/maven2/org/apache/thrift/libthrift/0.9.1/libthrift-0.9.1.jar
 	cd vendor && wget http://central.maven.org/maven2/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar
 
