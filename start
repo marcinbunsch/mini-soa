@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+make haproxy &
+make java &
+ruby services/api/http_worker.rb &
+ruby services/notes/worker.rb &
+python services/billing/worker.py &
+
+wait

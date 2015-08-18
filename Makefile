@@ -1,3 +1,7 @@
+all:
+	make deps gen
+	./start
+
 gen:
 	thrift --gen rb:namespaced --gen py --gen java config/service.thrift
 	thrift --gen rb:namespaced --gen py --gen java config/auth.thrift
@@ -8,7 +12,8 @@ haproxy:
 	haproxy -f config/haproxy.cfg
 
 deps:
-	brew install thrift
+	brew install thrift haproxy
+	bundle
 	easy_install thrift
 	mkdir -p vendor
 	rm -rf vendor/*.jar
