@@ -1,6 +1,7 @@
 # include thrift-generated code
 $:.push('./gen-rb')
 
+trap('INT') { exit }
 require "rubygems"
 require "bundler/setup"
 require 'thrift'
